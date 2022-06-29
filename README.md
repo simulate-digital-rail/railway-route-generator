@@ -1,3 +1,2 @@
-# planpro-running-track-generator
+# PlanPro Running-Track Generator
 
-Currently still on GitLab, comes during the next days...
