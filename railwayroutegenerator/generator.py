@@ -1,4 +1,5 @@
 import json
+import deprecation
 from .planproreader import PlanProReader
 from .routegenerator import RouteGenerator
 
@@ -28,9 +29,13 @@ def generate_from_planpro(planpro_file, output_format="json", output_file_name=N
     return generate_from_topology(topology, output_format, output_file_name)
 
 
+@deprecation.deprecated(details="generate_to_file will be removed soon. Use generate_from_topology or "
+                                "generate_from_planpro with optional parameters instead.")
 def generate_to_file(input_planpro_file, output_file, output_format="json"):
     generate_from_planpro(input_planpro_file, output_format, output_file)
 
 
+@deprecation.deprecated(details="generate will be removed soon. Use generate_from_topology or "
+                                "generate_from_planpro instead.")
 def generate(input_planpro_file, output_format="json"):
     return generate_from_planpro(input_planpro_file, output_format)
