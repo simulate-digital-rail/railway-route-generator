@@ -1,5 +1,3 @@
-
-
 class Node(object):
     # A node represents a top node, its connections are top edges
 
