@@ -2,7 +2,7 @@ import json
 from decimal import Decimal
 
 
-class RunningTrack(object):
+class Route(object):
 
     def __init__(self, start_signal, start_edge_uuid):
         self.start_signal = start_signal
@@ -10,7 +10,7 @@ class RunningTrack(object):
         self.end_signal = None
 
     def duplicate(self):
-        new_obj = RunningTrack(self.start_signal, None)
+        new_obj = Route(self.start_signal, None)
         new_obj.edge_uuids = []
         for edge_uuid in self.edge_uuids:
             new_obj.edge_uuids.append(edge_uuid)

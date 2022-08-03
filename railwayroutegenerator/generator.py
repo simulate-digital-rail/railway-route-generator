@@ -1,6 +1,6 @@
 import planpromodel
 import json
-from .model import Node, Signal, RunningTrack
+from .model import Node, Signal, Route
 
 
 def read_topology_from_container(container):
@@ -117,7 +117,7 @@ def dfs(current_node, previous_node, current_track, edge_uuids_by_nodes, signals
     if next_nodes is None or len(next_nodes) == 0:
         return []
 
-    found_tracks = []
+    found_routes = []
     for next_node in next_nodes:
         edge_uuid = get_edge_uuid_by_nodes(edge_uuids_by_nodes, current_node, next_node)
         if edge_uuid is None:
@@ -129,39 +129,39 @@ def dfs(current_node, previous_node, current_track, edge_uuids_by_nodes, signals
                 if signal.function == "Ausfahr_Signal": # TODO: Whats about single edges with multiple Einfahr und Ausfahr signals?
                     closed_track = track_with_edge.duplicate()
                     closed_track.end_signal = signal
-                    found_tracks.append(closed_track)
+                    found_routes.append(closed_track)
             # TODO: Whats about multiple Ausfahr signals in a row on different tracks? Should it only effect the first
             # one? Means: If a Ausfahr Signal is found before, no further DFS on that path.
-            found_tracks = found_tracks + dfs(next_node, current_node, track_with_edge, edge_uuids_by_nodes, signals)
-    return found_tracks
+            found_routes = found_routes + dfs(next_node, current_node, track_with_edge, edge_uuids_by_nodes, signals)
+    return found_routes
 
 
-def generate_running_tracks(edge_uuids_by_nodes, signals):
-    running_tracks = []
+def generate_routes(edge_uuids_by_nodes, signals):
+    routes = []
     for signal in signals:
         if signal.function == "Einfahr_Signal":
-            running_track = RunningTrack(signal, get_edge_uuid_by_nodes(edge_uuids_by_nodes, signal.previous_node, signal.next_node))
+            route = Route(signal, get_edge_uuid_by_nodes(edge_uuids_by_nodes, signal.previous_node, signal.next_node))
             next_node = signal.next_node
-            running_tracks = running_tracks + dfs(next_node, signal.previous_node, running_track, edge_uuids_by_nodes, signals)
-    return running_tracks
+            routes = routes + dfs(next_node, signal.previous_node, route, edge_uuids_by_nodes, signals)
+    return routes
 
 
-def print_output(running_tracks, edge_lengths, output_format, output_file):
+def print_output(routes, edge_lengths, output_format, output_file):
     if output_format == "json":
         if output_file is None:
-            return json.dumps([json.loads(running_track.toJSON(edge_lengths)) for running_track in running_tracks], indent=4)
+            return json.dumps([json.loads(route.toJSON(edge_lengths)) for route in routes], indent=4)
         else:
             with open(output_file, 'w') as f:
-                json.dump([json.loads(running_track.toJSON(edge_lengths)) for running_track in running_tracks], f, indent=4)
+                json.dump([json.loads(route.toJSON(edge_lengths)) for route in routes], f, indent=4)
 
 
 def generate(input_planpro_file, output_format="json"):
     nodes, edges, edge_uuids_by_nodes, edge_lengths, signals = read_topology(input_planpro_file)
-    running_tracks = generate_running_tracks(edge_uuids_by_nodes, signals)
-    return print_output(running_tracks, edge_lengths, output_format, None)
+    routes = generate_routes(edge_uuids_by_nodes, signals)
+    return print_output(routes, edge_lengths, output_format, None)
 
 
 def generate_to_file(input_planpro_file, output_file, output_format="json"):
     nodes, edges, edge_uuids_by_nodes, edge_lengths, signals = read_topology(input_planpro_file)
-    running_tracks = generate_running_tracks(edge_uuids_by_nodes, signals)
-    print_output(running_tracks, edge_lengths, output_format, output_file)
+    routes = generate_routes(edge_uuids_by_nodes, signals)
+    print_output(routes, edge_lengths, output_format, output_file)
