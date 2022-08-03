@@ -1,8 +1,6 @@
 import planpromodel
 import json
-from .model.node import Node
-from .model.signal import Signal
-from .model.running_track import RunningTrack
+from .model import Node, Signal, RunningTrack
 
 
 def read_topology_from_container(container):
