@@ -8,6 +8,12 @@ class Route(object):
         self.edges = [start_edge]
         self.end_signal = None
 
+    def get_length(self):
+        length_sum = 0.0
+        for edge in self.edges:
+            length_sum = length_sum + float(edge.length)
+        return length_sum
+
     def duplicate(self):
         new_obj = Route(self.start_signal, None)
         new_obj.edges = []

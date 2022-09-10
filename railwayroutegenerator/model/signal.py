@@ -7,3 +7,4 @@ class Signal(object):
         self.function = None
         self.distance = 0.0
         self.wirkrichtung = "in"
+        self.name = None
