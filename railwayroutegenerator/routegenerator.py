@@ -20,7 +20,7 @@ class RouteGenerator(object):
                 route_with_edge = current_route.duplicate()
                 route_with_edge.edges.append(edge)
                 for signal in edge.signals:
-                    if signal.function == "Ausfahr_Signal":  # TODO: Whats about single edges with multiple Einfahr und Ausfahr signals?
+                    if signal.function == "Ausfahr_Signal" or signal.function == "Block_Signal":  # TODO: Whats about single edges with multiple Einfahr und Ausfahr signals?
                         closed_track = route_with_edge.duplicate()
                         closed_track.end_signal = signal
                         found_routes.append(closed_track)
@@ -33,7 +33,7 @@ class RouteGenerator(object):
         routes = []
         for signal_uuid in self.topology.signals:
             signal = self.topology.signals[signal_uuid]
-            if signal.function == "Einfahr_Signal":
+            if signal.function == "Einfahr_Signal" or signal.function == "Block_Signal":
                 route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
                 next_node = signal.next_node
                 routes = routes + self.dfs(next_node, signal.previous_node, route)
