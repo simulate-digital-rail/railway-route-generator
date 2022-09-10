@@ -37,4 +37,19 @@ class RouteGenerator(object):
                 route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
                 next_node = signal.next_node
                 routes = routes + self.dfs(next_node, signal.previous_node, route)
-        return routes
+
+        # Filter duplicates
+        filtered_routes = []
+        for route in routes:
+            should_be_added = True
+            for filtered_route in filtered_routes:
+                if route.start_signal.uuid == filtered_route.start_signal.uuid and \
+                   route.end_signal.uuid == filtered_route.end_signal.uuid:
+                    if route.get_length() < filtered_route.get_length():
+                        filtered_routes.remove(filtered_route)
+                    else:
+                        should_be_added = False
+            if should_be_added:
+                filtered_routes.append(route)
+
+        return filtered_routes
