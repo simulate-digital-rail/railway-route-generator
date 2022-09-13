@@ -14,6 +14,12 @@ class Route(object):
             length_sum = length_sum + float(edge.length)
         return length_sum
 
+    def contains_edge(self, _edge):
+        for edge in self.edges:
+            if edge.uuid == _edge.uuid:
+                return True
+        return False
+
     def duplicate(self):
         new_obj = Route(self.start_signal, None)
         new_obj.edges = []

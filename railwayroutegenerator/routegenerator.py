@@ -13,9 +13,13 @@ class RouteGenerator(object):
 
         found_routes = []
         for next_node in next_nodes:
+            if next_node is None:
+                continue
             edge = self.topology.get_edge_by_nodes(current_node, next_node)
             if edge is None:
                 print("Bad error, edge not found, datastructure broken.")
+            elif current_route.contains_edge(edge):
+                continue
             else:
                 route_with_edge = current_route.duplicate()
                 route_with_edge.edges.append(edge)
