@@ -71,6 +71,6 @@ setup(
     packages=find_packages(),  # Required
     install_requires=[
         'deprecation',
-        "planpro-python-model @ git+ssh://git@github.com/arneboockmeyer/planpro-python-model.git",
+        "planpro-python-model @ git+https://github.com/arneboockmeyer/planpro-python-model.git",
     ],
 )
