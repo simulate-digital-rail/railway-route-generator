@@ -1,0 +1,6 @@
+node n0 0 0
+node n1 100 0
+edge n0 n1
+signal n0 n1 10 Einfahr_Signal Hauptsignal ES
+signal n0 n1 90 Ausfahr_Signal Hauptsignal AS
+signal n1 n0 50 Ausfahr_Signal Hauptsignal NAS
