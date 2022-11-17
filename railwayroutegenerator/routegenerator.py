@@ -40,7 +40,10 @@ class RouteGenerator(object):
             if signal.function == "Einfahr_Signal" or signal.function == "Block_Signal":
                 route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
                 next_node = signal.next_node
-                routes = routes + self.dfs(next_node, signal.previous_node, route)
+                if signal.wirkrichtung == "in":
+                    routes = routes + self.dfs(next_node, signal.previous_node, route)
+                else:
+                    routes = routes + self.dfs(signal.previous_node, next_node, route)
 
         # Filter duplicates
         filtered_routes = []
