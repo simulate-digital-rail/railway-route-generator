@@ -1,0 +1,10 @@
+node n0 0 0
+node n1 100 0
+edge n0 n1
+signal n0 n1 10 Einfahr_Signal Hauptsignal ES1
+signal n0 n1 20 Ausfahr_Signal Hauptsignal AS1
+signal n0 n1 70 Einfahr_Signal Hauptsignal ES2
+signal n0 n1 80 Ausfahr_Signal Hauptsignal AS2
+signal n1 n0 80 Einfahr_Signal Hauptsignal ES3
+signal n1 n0 90 Ausfahr_Signal Hauptsignal AS3
+signal n0 n1 50 Blocksignal Hauptsignal BS1
