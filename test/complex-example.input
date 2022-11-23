@@ -1,0 +1,38 @@
+node n1 0 0
+node n2 100 0
+node n3 150 0
+node nt1 200 10
+node nt2 230 15
+node nt3 200 -10
+node nt4 230 -15
+node n4 250 0
+node n5 300 30
+node n6 400 60
+node n7 150 30
+node n8 200 60
+edge n1 n2
+edge n2 n3
+edge n3 nt1 coords 170,10
+edge n3 nt3 coords 170,-10
+edge nt1 nt2
+edge nt3 nt4
+edge nt1 n4 coords 230,10
+edge nt3 n4 coords 230,-10
+edge n4 n5
+edge n5 n6
+edge n2 n7
+edge n7 n5
+edge n7 n8
+signal n1 n2 50 Block_Signal Hauptsignal BS1
+signal n2 n3 25 Einfahr_Signal Hauptsignal ES1
+signal nt1 n4 30 Ausfahr_Signal Hauptsignal AS1
+signal nt3 n4 30 Ausfahr_Signal Hauptsignal AS2
+signal n5 n6 50 Block_Signal Hauptsignal BS3
+signal n7 n5 50 Block_Signal Hauptsignal BS2
+signal n2 n1 50 Block_Signal Hauptsignal BS7
+signal nt3 n3 30 Ausfahr_Signal Hauptsignal AS4
+signal nt1 n3 30 Ausfahr_Signal Hauptsignal AS3
+signal n5 n4 25 Einfahr_Signal Hauptsignal ES2
+signal n6 n5 50 Block_Signal Hauptsignal BS4
+signal n5 n7 50 Block_Signal Hauptsignal BS5
+signal n5 n7 100 Block_Signal Hauptsignal BS6

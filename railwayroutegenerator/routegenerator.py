@@ -6,41 +6,51 @@ class RouteGenerator(object):
     def __init__(self, topology):
         self.topology = topology
 
-    def dfs(self, current_node, previous_node, current_route):
-        next_nodes = current_node.get_possible_followers(previous_node)
-        if next_nodes is None or len(next_nodes) == 0:
-            return []
+    def traverse_edge(self, edge, direction, current_route=None, active_signal=None):
+        routes = []
+        signals_on_edge_in_direction = edge.get_signals_with_direction_in_order(direction)
 
-        found_routes = []
-        for next_node in next_nodes:
-            if next_node is None:
-                continue
-            edge = self.topology.get_edge_by_nodes(current_node, next_node)
-            if edge is None:
-                print("Bad error, edge not found, datastructure broken.")
-            elif current_route.contains_edge(edge):
-                continue
+        if current_route is None and active_signal is None and len(signals_on_edge_in_direction) == 0:
+            return []  # No signals on this edge, so no start
+        if current_route is not None:
+            current_route.edges.append(edge)
+
+        for signal in signals_on_edge_in_direction:
+            if active_signal is None:
+                # New start signal
+                active_signal = signal
+                current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
+            elif active_signal.function != signal.function or active_signal.function == "Block_Signal":
+                # Route ends at signal
+                current_route.end_signal = signal
+                routes.append(current_route)
+                # And start the next route from this signal
+                active_signal = signal
+                current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
             else:
-                route_with_edge = current_route.duplicate()
-                route_with_edge.edges.append(edge)
-                for signal in edge.signals:
-                    if signal.function == "Ausfahr_Signal" or signal.function == "Block_Signal":  # TODO: Whats about single edges with multiple Einfahr und Ausfahr signals?
-                        closed_track = route_with_edge.duplicate()
-                        closed_track.end_signal = signal
-                        found_routes.append(closed_track)
-                # TODO: Whats about multiple Ausfahr signals in a row on different tracks? Should it only effect the first
-                # one? Means: If a Ausfahr Signal is found before, no further DFS on that path.
-                found_routes = found_routes + self.dfs(next_node, current_node, route_with_edge)
-        return found_routes
+                # Next signal is from the same kind, error
+                raise ValueError("The topology contains two Einfahr_Signals or two Ausfahr_Signals in a row")
+
+        next_node = edge.node_b
+        previous_node = edge.node_a
+        if direction == "gegen":
+            next_node = edge.node_a
+            previous_node = edge.node_b
+
+        possible_followers = next_node.get_possible_followers(previous_node)
+        for possible_follower in possible_followers:
+            next_edge = self.topology.get_edge_by_nodes(next_node, possible_follower)
+            next_direction = next_edge.get_direction_based_on_nodes(next_node, possible_follower)
+            routes = routes + self.traverse_edge(next_edge, next_direction, current_route.duplicate(), active_signal)
+
+        return routes
 
     def generate_routes(self):
         routes = []
-        for signal_uuid in self.topology.signals:
-            signal = self.topology.signals[signal_uuid]
-            if signal.function == "Einfahr_Signal" or signal.function == "Block_Signal":
-                route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
-                next_node = signal.next_node
-                routes = routes + self.dfs(next_node, signal.previous_node, route)
+        for edge_uuid in self.topology.edges:
+            edge = self.topology.edges[edge_uuid]
+            routes = routes + self.traverse_edge(edge, "in")
+            routes = routes + self.traverse_edge(edge, "gegen")
 
         # Filter duplicates
         filtered_routes = []

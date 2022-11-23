@@ -1,0 +1,10 @@
+node n0 0 0
+node n1 100 0
+node n2 200 50
+node n3 200 -50
+edge n0 n1
+edge n1 n2
+edge n1 n3
+signal n0 n1 50 Block_Signal Hauptsignal BS1
+signal n1 n2 50 Block_Signal Hauptsignal BS2
+signal n1 n3 50 Block_Signal Hauptsignal BS3

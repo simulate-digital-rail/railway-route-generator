@@ -61,24 +61,26 @@ class PlanProReader(object):
     def read_signals_from_container(self, container):
         for signal in container.Signal:
             signal_uuid = signal.Identitaet.Wert
-            signal_obj = Signal(signal_uuid)
 
             if signal.Signal_Real is not None and signal.Signal_Real.Signal_Real_Aktiv is not None:
                 if len(signal.Punkt_Objekt_TOP_Kante) == 1:  # If greater, no real signal with lights
                     if signal.Bezeichnung is not None and signal.Bezeichnung.Bezeichnung_Aussenanlage is not None:
-                        signal_obj.function = signal.Signal_Real.Signal_Real_Aktiv.Signal_Funktion.Wert
-                        signal_obj.name = signal.Bezeichnung.Bezeichnung_Aussenanlage.Wert
-                        top_kante_id = signal.Punkt_Objekt_TOP_Kante[0].ID_TOP_Kante.Wert
-                        signal_obj.wirkrichtung = signal.Punkt_Objekt_TOP_Kante[0].Wirkrichtung.Wert
-                        signal_obj.distance = signal.Punkt_Objekt_TOP_Kante[0].Abstand.Wert
-                        edge = self.topology.edges[top_kante_id]
+                        function = signal.Signal_Real.Signal_Real_Aktiv.Signal_Funktion.Wert
+                        if function == "Einfahr_Signal" or function == "Ausfahr_Signal" or function == "Block_Signal":
+                            signal_obj = Signal(signal_uuid)
+                            signal_obj.function = function
+                            signal_obj.name = signal.Bezeichnung.Bezeichnung_Aussenanlage.Wert
+                            top_kante_id = signal.Punkt_Objekt_TOP_Kante[0].ID_TOP_Kante.Wert
+                            signal_obj.wirkrichtung = signal.Punkt_Objekt_TOP_Kante[0].Wirkrichtung.Wert
+                            signal_obj.distance = signal.Punkt_Objekt_TOP_Kante[0].Abstand.Wert
+                            edge = self.topology.edges[top_kante_id]
 
-                        if signal_obj.wirkrichtung == "in":
-                            signal_obj.previous_node = edge.node_a
-                            signal_obj.next_node = edge.node_b
-                        else:
-                            signal_obj.previous_node = edge.node_b
-                            signal_obj.next_node = edge.node_a
-                        self.topology.add_signal(signal_obj)
-                        edge.signals.append(signal_obj)
+                            if signal_obj.wirkrichtung == "in":
+                                signal_obj.previous_node = edge.node_a
+                                signal_obj.next_node = edge.node_b
+                            else:
+                                signal_obj.previous_node = edge.node_b
+                                signal_obj.next_node = edge.node_a
+                            self.topology.add_signal(signal_obj)
+                            edge.signals.append(signal_obj)
 
