@@ -38,21 +38,28 @@ class PlanProReader(object):
 
             # Anschluss A
             anschluss_a = top_kante.TOP_Kante_Allg.TOP_Anschluss_A.Wert
-            if anschluss_a == "Links":
-                node_a.set_connection_left(node_b)
-            elif anschluss_a == "Rechts":
-                node_a.set_connection_right(node_b)
-            else:
-                node_a.set_connection_head(node_b)
-
             # Anschluss B
             anschluss_b = top_kante.TOP_Kante_Allg.TOP_Anschluss_B.Wert
-            if anschluss_b == "Links":
+
+            if anschluss_a == "sonstige" and anschluss_b == "sonstige":
+                node_a.set_connection_left(node_b)
+                node_a.set_connection_right(node_b)
                 node_b.set_connection_left(node_a)
-            elif anschluss_b == "Rechts":
                 node_b.set_connection_right(node_a)
             else:
-                node_b.set_connection_head(node_a)
+                if anschluss_a == "Links":
+                    node_a.set_connection_left(node_b)
+                elif anschluss_a == "Rechts":
+                    node_a.set_connection_right(node_b)
+                else:
+                    node_a.set_connection_head(node_b)
+
+                if anschluss_b == "Links":
+                    node_b.set_connection_left(node_a)
+                elif anschluss_b == "Rechts":
+                    node_b.set_connection_right(node_a)
+                else:
+                    node_b.set_connection_head(node_a)
 
             length = top_kante.TOP_Kante_Allg.TOP_Laenge.Wert
             edge = Edge(top_kante_uuid, node_a, node_b, length)
