@@ -71,6 +71,6 @@ setup(
     packages=find_packages(),  # Required
     install_requires=[
         'deprecation',
-        "planpro-python-model @ git+https://github.com/arneboockmeyer/planpro-python-model.git",
+        'yaramo @ git+https://github.com:DRSS-EULYNX-2022/Yaramo.git',
     ],
 )
