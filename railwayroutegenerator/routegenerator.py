@@ -20,15 +20,14 @@ class RouteGenerator(object):
             if active_signal is None:
                 # New start signal
                 active_signal = signal
-                #current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
-                current_route = Route(200, signal)
-            elif active_signal.function != signal.function or active_signal.function == SignalFunction.Blocksignal:
+                current_route = Route(signal)
+            elif active_signal.function != signal.function or active_signal.function == SignalFunction.Block_Signal:
                 # Route ends at signal
                 current_route.end_signal = signal
                 routes.append(current_route)
                 # And start the next route from this signal
                 active_signal = signal
-                current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
+                current_route = Route(signal)
             else:
                 # Next signal is from the same kind, error
                 raise ValueError("The topology contains two Einfahr_Signals or two Ausfahr_Signals in a row")

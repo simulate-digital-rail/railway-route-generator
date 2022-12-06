@@ -1,5 +1,5 @@
 import json
-from .routegenerator import RouteGenerator
+from railwayroutegenerator.routegenerator import RouteGenerator
 from planpro_importer.reader import PlanProReader
 
 
