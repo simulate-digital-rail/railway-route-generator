@@ -71,6 +71,6 @@ setup(
     packages=find_packages(),  # Required
     install_requires=[
         'deprecation',
-        'yaramo @ git+https://github.com:DRSS-EULYNX-2022/Yaramo.git',
+        'yaramo @ git+https://github.com:simulate-digital-rail/yaramo.git',
     ],
 )

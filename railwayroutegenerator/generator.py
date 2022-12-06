@@ -1,5 +1,6 @@
 import json
 from .routegenerator import RouteGenerator
+from planpro_importer.reader import PlanProReader
 
 
 def print_output(routes, output_format, output_file):
