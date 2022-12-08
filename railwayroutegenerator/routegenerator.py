@@ -1,4 +1,5 @@
-from .model import Route
+from yaramo.model import Route
+from yaramo.signal import SignalDirection, SignalFunction
 
 
 class RouteGenerator(object):
@@ -19,21 +20,21 @@ class RouteGenerator(object):
             if active_signal is None:
                 # New start signal
                 active_signal = signal
-                current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
-            elif active_signal.function != signal.function or active_signal.function == "Block_Signal":
+                current_route = Route(signal)
+            elif active_signal.function != signal.function or active_signal.function == SignalFunction.Block_Signal:
                 # Route ends at signal
                 current_route.end_signal = signal
                 routes.append(current_route)
                 # And start the next route from this signal
                 active_signal = signal
-                current_route = Route(signal, self.topology.get_edge_by_nodes(signal.previous_node, signal.next_node))
+                current_route = Route(signal)
             else:
                 # Next signal is from the same kind, error
                 raise ValueError("The topology contains two Einfahr_Signals or two Ausfahr_Signals in a row")
 
         next_node = edge.node_b
         previous_node = edge.node_a
-        if direction == "gegen":
+        if direction == SignalDirection.GEGEN:
             next_node = edge.node_a
             previous_node = edge.node_b
 
@@ -49,8 +50,8 @@ class RouteGenerator(object):
         routes = []
         for edge_uuid in self.topology.edges:
             edge = self.topology.edges[edge_uuid]
-            routes = routes + self.traverse_edge(edge, "in")
-            routes = routes + self.traverse_edge(edge, "gegen")
+            routes = routes + self.traverse_edge(edge, SignalDirection.IN)
+            routes = routes + self.traverse_edge(edge, SignalDirection.GEGEN)
 
         # Filter duplicates
         filtered_routes = []

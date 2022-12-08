@@ -1,9 +1,12 @@
+from planpro_importer.reader import PlanProReader
+
 from railwayroutegenerator import generator
 from .helper import compare_route_lists
 
 
 def test_simple_point():
-    routes = generator.generate_from_planpro("simple-point-test.ppxml", output_format="python-objects")
+    topology = PlanProReader("simple-point-test.ppxml").read_topology_from_plan_pro_file()
+    routes = generator.generate_from_topology(topology, output_format="python-objects")
     expected_routes = [("60ES", "60AS")]
     compare_route_lists(routes, expected_routes)
 
