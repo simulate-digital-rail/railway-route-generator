@@ -14,7 +14,7 @@ yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
-planpro-importer = {git = "https://github.com/jeriox/planpro-python-model", rev = "yaramo"}
+planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer"}
 
 [build-system]
 requires = ["poetry-core"]
