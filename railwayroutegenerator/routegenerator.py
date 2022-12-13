@@ -28,9 +28,6 @@ class RouteGenerator(object):
                 # And start the next route from this signal
                 active_signal = signal
                 current_route = Route(signal)
-            else:
-                # Next signal is from the same kind, error
-                raise ValueError("The topology contains two Einfahr_Signals or two Ausfahr_Signals in a row")
 
         next_node = edge.node_b
         previous_node = edge.node_a
