@@ -33,8 +33,7 @@ class Route(object):
         output_dict["start_signal"] = self.start_signal.uuid
         output_dict["edges"] = []
 
-        for i in range(0, len(self.edges)):
-            edge = self.edges[i]
+        for i, edge in enumerate(self.edges):
             from_d = 0.0
             to_d = 0.0
 
