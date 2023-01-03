@@ -9,7 +9,7 @@ packages = [{include = "railwayroutegenerator"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 
 
 [tool.poetry.group.dev.dependencies]
