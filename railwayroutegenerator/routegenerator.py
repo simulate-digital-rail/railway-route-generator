@@ -1,11 +1,12 @@
 from yaramo.model import Route, Edge
 from yaramo.signal import SignalDirection, SignalFunction
+from yaramo.topology import Topology
 
 
 class RouteGenerator(object):
 
     def __init__(self, topology):
-        self.topology = topology
+        self.topology: Topology = topology
 
     def traverse_edge(self, edge: Edge, direction, current_route=None, active_signal=None):
         routes = []
@@ -69,4 +70,4 @@ class RouteGenerator(object):
             if should_be_added:
                 filtered_routes.append(route)
 
-        return filtered_routes
+        self.topology.routes = filtered_routes
