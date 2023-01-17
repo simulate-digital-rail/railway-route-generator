@@ -1,4 +1,4 @@
-from yaramo.model import Route
+from yaramo.model import Route, Edge
 from yaramo.signal import SignalDirection, SignalFunction
 
 
@@ -7,7 +7,7 @@ class RouteGenerator(object):
     def __init__(self, topology):
         self.topology = topology
 
-    def traverse_edge(self, edge, direction, current_route=None, active_signal=None):
+    def traverse_edge(self, edge: Edge, direction, current_route=None, active_signal=None):
         routes = []
         signals_on_edge_in_direction = edge.get_signals_with_direction_in_order(direction)
 
@@ -15,19 +15,21 @@ class RouteGenerator(object):
             return []  # No signals on this edge, so no start
         if current_route is not None:
             current_route.edges.append(edge)
+            if edge.maximum_speed is not None and (current_route.maximum_speed is None or edge.maximum_speed < current_route.maximum_speed):
+                current_route.maximum_speed = edge.maximum_speed
 
         for signal in signals_on_edge_in_direction:
             if active_signal is None:
                 # New start signal
                 active_signal = signal
-                current_route = Route(signal)
+                current_route = Route(signal, maximum_speed=edge.maximum_speed)
             elif active_signal.function != signal.function or active_signal.function == SignalFunction.Block_Signal:
                 # Route ends at signal
                 current_route.end_signal = signal
                 routes.append(current_route)
                 # And start the next route from this signal
                 active_signal = signal
-                current_route = Route(signal)
+                current_route = Route(signal, maximum_speed=edge.maximum_speed)
             else:
                 # Next signal is from the same kind, error
                 raise ValueError("The topology contains two Einfahr_Signals or two Ausfahr_Signals in a row")
