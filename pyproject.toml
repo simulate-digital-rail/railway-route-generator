@@ -16,6 +16,9 @@ yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 pytest = "^7.1.2"
 planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer"}
 orm-importer = {git = "https://github.com/simulate-digital-rail/orm-importer"}
+pylint = "^2.15.10"
+black = "^22.12.0"
+pre-commit = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,6 +1,7 @@
 from planpro_importer.reader import PlanProReader
 
 from railwayroutegenerator import generator
+
 from .helper import compare_route_lists
 
 
@@ -11,5 +12,5 @@ def test_line():
     compare_route_lists(routes, expected_routes)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_line()

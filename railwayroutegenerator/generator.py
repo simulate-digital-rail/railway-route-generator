@@ -1,17 +1,22 @@
 import json
+
 from railwayroutegenerator.routegenerator import RouteGenerator
 
 
 def print_output(routes, output_format, output_file):
     if output_format == "json":
         if output_file is None:
-            return json.dumps([route.to_serializable()[0] for route in routes], indent=4)
+            return json.dumps(
+                [route.to_serializable()[0] for route in routes], indent=4
+            )
         else:
-            with open(output_file, 'w') as f:
+            with open(output_file, "w") as f:
                 json.dump([route.to_serializable()[0] for route in routes], f, indent=4)
     if output_format == "python-objects":
         if output_file is not None:
-            print("Warning: The output format 'python-object' does not support printing to files.")
+            print(
+                "Warning: The output format 'python-object' does not support printing to files."
+            )
         return routes
 
 
