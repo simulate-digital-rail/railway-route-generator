@@ -91,4 +91,4 @@ class RouteGenerator(object):
             if should_be_added:
                 filtered_routes.append(route)
 
-        self.topology.routes = filtered_routes
+        self.topology.routes = {route.uuid: route for route in filtered_routes}
