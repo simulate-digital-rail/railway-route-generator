@@ -10,6 +10,13 @@ class RouteGenerator(object):
     def traverse_edge(
         self, edge: Edge, direction, current_route=None, active_signal=None
     ):
+        if current_route is not None:
+            for _edge in current_route.edges:
+                if _edge.uuid == edge.uuid:
+                    # Loop
+                    return []
+            if len(current_route.edges) > 20:
+                return []
         routes = []
         signals_on_edge_in_direction = edge.get_signals_with_direction_in_order(
             direction
@@ -58,6 +65,8 @@ class RouteGenerator(object):
 
         possible_followers = next_node.get_possible_followers(previous_node)
         for possible_follower in possible_followers:
+            if possible_follower is None:
+                continue
             next_edge = self.topology.get_edge_by_nodes(next_node, possible_follower)
             next_direction = next_edge.get_direction_based_on_nodes(
                 next_node, possible_follower
