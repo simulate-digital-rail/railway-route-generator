@@ -23,7 +23,7 @@ jobs:
       - name: check import order with isort
         run: |
           poetry run isort -c .
-      - name: Lint with pylint
+      - name: Lint with pylint --fail-under 8.5
         run: |
           poetry run pylint railwayroutegenerator    
 

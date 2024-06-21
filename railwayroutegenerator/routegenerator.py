@@ -3,7 +3,7 @@ from yaramo.signal import SignalDirection, SignalFunction
 from yaramo.topology import Topology
 
 
-class RouteGenerator(object):
+class RouteGenerator:
     def __init__(self, topology, max_route_length: int = 20):
         self.topology: Topology = topology
         self.max_route_length: int = max_route_length
