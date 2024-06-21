@@ -566,10 +566,10 @@ files = [
 
 [[package]]
 name = "orm-importer"
-version = "1.1.0"
+version = "1.1.1"
 description = "This tool converts data from OpenRailwayMap into yaramo models."
 optional = false
-python-versions = "^3.9"
+python-versions = "^3.10"
 files = []
 develop = false
 
@@ -600,7 +600,7 @@ zipp = "3.8.1"
 type = "git"
 url = "https://github.com/simulate-digital-rail/orm-importer"
 reference = "HEAD"
-resolved_reference = "70a016ac8142233d2f7f576e9f437b1473031427"
+resolved_reference = "102d7c61d63e50117425c29c1b37be3a743b4d8a"
 
 [[package]]
 name = "overpy"
@@ -639,7 +639,7 @@ files = [
 
 [[package]]
 name = "planpro-importer"
-version = "1.9.1"
+version = "1.9.2"
 description = ""
 optional = false
 python-versions = "^3.10"
@@ -655,7 +655,7 @@ yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 type = "git"
 url = "https://github.com/simulate-digital-rail/planpro-importer"
 reference = "HEAD"
-resolved_reference = "01d73c28f210c8d16d419b2c7cab5d14934eaa71"
+resolved_reference = "d3439f47b0b363e4f49258def18068cbb63aa2fc"
 
 [[package]]
 name = "platformdirs"
@@ -1027,7 +1027,7 @@ files = [
 
 [[package]]
 name = "yaramo"
-version = "0.1.0"
+version = "0.1.1"
 description = "yaramo is a railway model focusing on interoperability between different existing planning formats."
 optional = false
 python-versions = "^3.8"
@@ -1041,7 +1041,7 @@ pyproj = "^3.4.1"
 type = "git"
 url = "https://github.com/simulate-digital-rail/yaramo"
 reference = "HEAD"
-resolved_reference = "f94b06c551bbbd527129448cd9bf5eb5a4575097"
+resolved_reference = "c094084efd84dacbe57b7d7b4a19c66c11a36f72"
 
 [[package]]
 name = "zipp"

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "railway-route-generator"
-version = "3.0.0"
+version = "3.0.1"
 description = ""
 repository="https://github.com/simulate-digital-rail/railway-route-generator"
 authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
