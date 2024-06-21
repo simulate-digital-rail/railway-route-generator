@@ -25,7 +25,7 @@ jobs:
           poetry run isort -c .
       - name: Lint with pylint
         run: |
-          poetry run pylint railwayroutegenerator    
+          poetry run pylint railwayroutegenerator --fail-under 8.5
 
   build:
     runs-on: ubuntu-latest

@@ -8,11 +8,13 @@ def _test_single_route(route, expected_route):
 def compare_route_lists(generated_routes, expected_routes):
     for expected_route in expected_routes:
         found_any = False
-        for route in generated_routes:
+        for route_uuid in generated_routes:
+            route = generated_routes[route_uuid]
             found_any = found_any or _test_single_route(route, expected_route)
         assert found_any, "Route " + str(expected_route) + " not found."
 
-    for route in generated_routes:
+    for route_uuid in generated_routes:
+        route = generated_routes[route_uuid]
         found_any = False
         for expected_route in expected_routes:
             found_any = found_any or _test_single_route(route, expected_route)

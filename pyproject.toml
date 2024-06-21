@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "railway-route-generator"
-version = "3.0.0"
+version = "3.0.1"
 description = ""
 repository="https://github.com/simulate-digital-rail/railway-route-generator"
 authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{include = "railwayroutegenerator"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 
 
