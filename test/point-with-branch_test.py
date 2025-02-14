@@ -1,4 +1,4 @@
-from planpro_importer.reader import PlanProReader
+from planpro_importer import PlanProVersion, import_planpro
 
 from railwayroutegenerator.routegenerator import RouteGenerator
 
@@ -6,9 +6,7 @@ from .helper import compare_route_lists
 
 
 def test_point_with_branch():
-    topology = PlanProReader(
-        "point-with-branch.ppxml"
-    ).read_topology_from_plan_pro_file()
+    topology = import_planpro("point-with-branch.ppxml", PlanProVersion.PlanPro19)
 
     route_generator = RouteGenerator(topology)
     route_generator.generate_routes()
