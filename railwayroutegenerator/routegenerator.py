@@ -59,21 +59,16 @@ class RouteGenerator:
                 )
 
         next_node = edge.node_b
-        previous_node = edge.node_a
         if direction == SignalDirection.GEGEN:
             next_node = edge.node_a
-            previous_node = edge.node_b
 
-        possible_followers = next_node.get_possible_followers(previous_node)
-        for possible_follower in possible_followers:
-            if possible_follower is None:
+        possible_following_edges = next_node.get_possible_followers(edge)
+        for possible_following_edge in possible_following_edges:
+            if possible_following_edge is None:
                 continue
-            next_edge = self.topology.get_edge_by_nodes(next_node, possible_follower)
-            next_direction = next_edge.get_direction_based_on_nodes(
-                next_node, possible_follower
-            )
+            next_direction = possible_following_edge.get_direction_based_on_start_node(next_node)
             routes = routes + self.traverse_edge(
-                next_edge, next_direction, current_route.duplicate(), active_signal
+                possible_following_edge, next_direction, current_route.duplicate(), active_signal
             )
 
         return routes
