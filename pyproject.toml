@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "railway-route-generator"
-version = "4.0"
+version = "5.0"
 description = ""
 repository="https://github.com/simulate-digital-rail/railway-route-generator"
 authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
@@ -9,13 +9,13 @@ packages = [{include = "railwayroutegenerator"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo", tag = "v1.0"}
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo", branch = "yaramo2"}
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
-planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer", tag = "v2.0"}
-orm-importer = {git = "https://github.com/simulate-digital-rail/orm-importer", tag = "v2.0"}
+planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer", branch = "yaramo2"}
+orm-importer = {git = "https://github.com/simulate-digital-rail/orm-importer", branch = "yaramo2"}
 pylint = "^2.15.10"
 black = "^22.12.0"
 pre-commit = "^3.0.0"
