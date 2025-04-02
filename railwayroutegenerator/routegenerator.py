@@ -66,9 +66,14 @@ class RouteGenerator:
         for possible_following_edge in possible_following_edges:
             if possible_following_edge is None:
                 continue
-            next_direction = possible_following_edge.get_direction_based_on_start_node(next_node)
+            next_direction = possible_following_edge.get_direction_based_on_start_node(
+                next_node
+            )
             routes = routes + self.traverse_edge(
-                possible_following_edge, next_direction, current_route.duplicate(), active_signal
+                possible_following_edge,
+                next_direction,
+                current_route.duplicate(),
+                active_signal,
             )
 
         return routes
